@@ -6,7 +6,7 @@ import css from "./SearchBar.module.css";
 export default function SearchBar ({value, onSearch}) {
     return (
         <header className={css.header}>
-            <Formik initialValues={{value}} onSubmit={() => {onSearch}}>
+            <Formik initialValues={{search: value}} onSubmit={() => {onSearch}}>
                 <Form>
                     <button className={css.button} type="submit"><IoSearchSharp/></button>
                     <Field name="search"></Field>

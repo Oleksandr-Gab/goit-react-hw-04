@@ -3,6 +3,9 @@ import SearchBar from '../SearchBar/SearchBar'
 
 function App() {
   const [search, setSearch] = useState("");
+  // const handlerSubmit = () => {
+  //   setSearch()
+  // }
 
   return (
     <>
