@@ -1,0 +1,13 @@
+.header {
+    background-color: blue;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    border: none;
+    background-color: none;
+    height: 20px;
+}
