@@ -38,6 +38,10 @@ function App() {
         getData();
     }, [search, page]);
 
+    useEffect(() => {
+        scrollToBottom();
+    }, [articles]);
+
     const handleSearch = (newSearch) => {
         setSearch(newSearch);
         setPage(1);
@@ -55,6 +59,13 @@ function App() {
 
     function closeModal() {
         setIsOpen(false);
+    }
+
+    function scrollToBottom() {
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+        });
     }
 
     return (
