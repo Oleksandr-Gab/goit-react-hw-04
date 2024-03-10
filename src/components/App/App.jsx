@@ -7,6 +7,8 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import css from "./App.module.css";
 import ImageModal from "../ImageModal/ImageModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     const [search, setSearch] = useState("");
@@ -26,9 +28,11 @@ function App() {
                 setError(false);
                 setisLoading(true);
                 const data = await fetchArticles(search, page);
-                setArticles((prevArticles) => {
-                    return [...prevArticles, ...data];
-                });
+                data.length > 0
+                    ? setArticles((prevArticles) => {
+                          return [...prevArticles, ...data];
+                      })
+                    : notify();
             } catch (e) {
                 setError(true);
             } finally {
@@ -41,6 +45,8 @@ function App() {
     useEffect(() => {
         scrollToBottom();
     }, [articles]);
+
+    const notify = () => toast.info("Nothing was found for your request!");
 
     const handleSearch = (newSearch) => {
         setSearch(newSearch);
@@ -71,6 +77,18 @@ function App() {
     return (
         <>
             <SearchBar onSearch={handleSearch} />
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <div className={css.galleryContainer}>
                 {articles !== 0 && (
                     <ImageGallery
