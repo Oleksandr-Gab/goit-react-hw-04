@@ -82,7 +82,7 @@ function App() {
                 )}
                 {isLoading && <Loader />}
                 {error && <ErrorMessage />}
-                {articles.length > 0 && !isLoading && (
+                {articles.length >= 12 && !isLoading && (
                     <LoadMoreBtn onLoad={handleLoadMore} />
                 )}
             </div>
