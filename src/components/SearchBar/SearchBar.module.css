@@ -4,10 +4,27 @@
     padding-bottom: 16px;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
+}
+
+.inputWrap {
+    position: relative;
 }
 
 .button {
+    position: absolute;
+    top: 4px;
     border: none;
-    background-color: none;
+    background: none;
     height: 20px;
+    cursor: pointer;
+}
+
+.search {
+    padding-left: 34px;
+}
+
+span {
+    color: red;
+    font-weight: 600;
 }
