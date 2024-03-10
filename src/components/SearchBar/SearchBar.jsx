@@ -17,6 +17,7 @@ export default function SearchBar({ onSearch }) {
             <Formik
                 initialValues={{ search: "" }}
                 validationSchema={searchSchema}
+                validateOnBlur={false}
                 onSubmit={(values, actions) => {
                     onSearch(values.search);
                     actions.resetForm();
