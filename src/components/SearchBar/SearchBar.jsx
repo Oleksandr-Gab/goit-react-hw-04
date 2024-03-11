@@ -1,24 +1,22 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
+import { Field, Form, Formik } from "formik";
 import { IoSearchSharp } from "react-icons/io5";
+import toast, { Toaster } from "react-hot-toast";
 
 import css from "./SearchBar.module.css";
 
-const searchSchema = Yup.object().shape({
-    search: Yup.string()
-        .min(1, "Too short!")
-        .max(50, "Too long")
-        .required("This is required you dummy"),
-});
+const notify = () =>
+    toast.error("This is required you dummy", {
+        duration: 600,
+    });
 
 export default function SearchBar({ onSearch }) {
     return (
         <header className={css.header}>
             <Formik
                 initialValues={{ search: "" }}
-                validationSchema={searchSchema}
                 validateOnBlur={false}
                 onSubmit={(values, actions) => {
+                    values.search === "" && notify();
                     onSearch(values.search);
                     actions.resetForm();
                 }}
@@ -34,9 +32,9 @@ export default function SearchBar({ onSearch }) {
                             placeholder="Search images and photos"
                         ></Field>
                     </div>
-                    <ErrorMessage name="search" component={"span"} />
                 </Form>
             </Formik>
+            <Toaster />
         </header>
     );
 }

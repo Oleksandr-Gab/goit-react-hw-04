@@ -1,18 +1,20 @@
-import SearchBar from "../SearchBar/SearchBar";
-import { fetchArticles } from "../../article-api";
+import { fetchImages } from "../../Unsplash-api";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import css from "./App.module.css";
+
+import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
-import css from "./App.module.css";
 import ImageModal from "../ImageModal/ImageModal";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     const [search, setSearch] = useState("");
-    const [articles, setArticles] = useState([]);
+    const [images, setImages] = useState([]);
     const [isLoading, setisLoading] = useState(false);
     const [error, setError] = useState(false);
     const [page, setPage] = useState(1);
@@ -27,12 +29,12 @@ function App() {
             try {
                 setError(false);
                 setisLoading(true);
-                const data = await fetchArticles(search, page);
+                const data = await fetchImages(search, page);
                 data.length > 0
-                    ? setArticles((prevArticles) => {
-                          return [...prevArticles, ...data];
+                    ? setImages((prevImeges) => {
+                          return [...prevImeges, ...data];
                       })
-                    : notify();
+                    : notifyInfo();
             } catch (e) {
                 setError(true);
             } finally {
@@ -44,22 +46,23 @@ function App() {
 
     useEffect(() => {
         scrollToBottom();
-    }, [articles]);
+    }, [images]);
 
-    const notify = () => toast.info("Nothing was found for your request!");
+    const notifyInfo = () => toast.info("Nothing was found for your request!");
 
     const handleSearch = (newSearch) => {
+        if (search === newSearch) return;
         setSearch(newSearch);
         setPage(1);
-        setArticles([]);
+        setImages([]);
     };
 
     const handleLoadMore = () => {
         setPage(page + 1);
     };
 
-    function openModal(data) {
-        setModalContent(data);
+    function getImg(image) {
+        setModalContent(image);
         setIsOpen(true);
     }
 
@@ -90,24 +93,23 @@ function App() {
                 theme="colored"
             />
             <div className={css.galleryContainer}>
-                {articles !== 0 && (
+                {images.length > 0 && (
                     <ImageGallery
-                        articles={articles}
-                        page={page}
-                        onOpen={openModal}
+                        images={images}
+                        onOpen={getImg}
                         onContent={setModalContent}
                     />
                 )}
                 {isLoading && <Loader />}
                 {error && <ErrorMessage />}
-                {articles.length >= 12 && !isLoading && (
+                {images.length >= 12 && !isLoading && (
                     <LoadMoreBtn onLoad={handleLoadMore} />
                 )}
             </div>
             {Object.keys(modalContent).length > 0 && (
                 <ImageModal
                     isOpen={modalIsOpen}
-                    modalContent={modalContent}
+                    image={modalContent}
                     onClose={closeModal}
                 />
             )}

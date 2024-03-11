@@ -1,3 +1,9 @@
-export default function ImageCard({ article }) {
-    return <img src={article.urls.small} alt={article.alt_description} />;
+export default function ImageCard({ image, onOpen }) {
+    return (
+        <img
+            onClick={() => onOpen(image)}
+            src={image.urls.small}
+            alt={image.alt_description}
+        />
+    );
 }

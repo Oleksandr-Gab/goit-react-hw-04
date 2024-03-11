@@ -5,7 +5,11 @@ import css from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
 
-export default function ImageModal({ isOpen, onClose, modalContent }) {
+export default function ImageModal({
+    isOpen,
+    onClose,
+    image: { urls, alt_description, user, likes },
+}) {
     return (
         <Modal
             isOpen={isOpen}
@@ -16,16 +20,16 @@ export default function ImageModal({ isOpen, onClose, modalContent }) {
             <>
                 <img
                     className={css.img}
-                    src={modalContent.urls.regular}
-                    alt={modalContent.alt_description}
+                    src={urls.regular}
+                    alt={alt_description}
                 />
                 <div className={css.description}>
-                    <p>Autors: {modalContent.user.name}</p>
+                    <p>Autors: {user.name}</p>
                     <p>
-                        {<FaHeart />} {modalContent.likes}
+                        {<FaHeart />} {likes}
                     </p>
                 </div>
-                <p className={css.text}>{modalContent.alt_description}</p>
+                <p className={css.text}>{alt_description}</p>
             </>
         </Modal>
     );
