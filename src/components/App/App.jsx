@@ -13,7 +13,7 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 
 const notifyInfo = () => toast.info("Nothing was found for your request!");
-const notifyErro = () => toast.error("Oops!Error!Reload!");
+const notifyErro = () => toast.error("Oops!Error!");
 
 function App() {
     const [search, setSearch] = useState("");
