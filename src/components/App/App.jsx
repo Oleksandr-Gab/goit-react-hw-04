@@ -12,6 +12,9 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 
+const notifyInfo = () => toast.info("Nothing was found for your request!");
+const notifyErro = () => toast.error("Oops!Error!Reload!");
+
 function App() {
     const [search, setSearch] = useState("");
     const [images, setImages] = useState([]);
@@ -20,6 +23,7 @@ function App() {
     const [page, setPage] = useState(1);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalContent, setModalContent] = useState({});
+    const [isContent, setIsContent] = useState(false);
 
     useEffect(() => {
         if (search === "") {
@@ -48,8 +52,6 @@ function App() {
         scrollToBottom();
     }, [images]);
 
-    const notifyInfo = () => toast.info("Nothing was found for your request!");
-
     const handleSearch = (newSearch) => {
         if (search === newSearch) return;
         setSearch(newSearch);
@@ -61,13 +63,24 @@ function App() {
         setPage(page + 1);
     };
 
+    const isModalContent = () => {
+        modalContent?.urls?.regular &&
+        modalContent?.user?.name &&
+        modalContent?.likes &&
+        modalContent?.alt_description
+            ? setIsContent(true)
+            : notifyErro();
+    };
+
     function openModal(image) {
         setModalContent(image);
+        isModalContent();
         setIsOpen(true);
     }
 
     function closeModal() {
         setIsOpen(false);
+        setIsContent(false);
     }
 
     function scrollToBottom() {
@@ -106,7 +119,7 @@ function App() {
                     <LoadMoreBtn onLoad={handleLoadMore} />
                 )}
             </div>
-            {Object.keys(modalContent).length > 0 && (
+            {isContent && (
                 <ImageModal
                     isOpen={modalIsOpen}
                     image={modalContent}
