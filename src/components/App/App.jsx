@@ -61,7 +61,7 @@ function App() {
         setPage(page + 1);
     };
 
-    function getImg(image) {
+    function openModal(image) {
         setModalContent(image);
         setIsOpen(true);
     }
@@ -82,7 +82,7 @@ function App() {
             <SearchBar onSearch={handleSearch} />
             <ToastContainer
                 position="top-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -96,7 +96,7 @@ function App() {
                 {images.length > 0 && (
                     <ImageGallery
                         images={images}
-                        onOpen={getImg}
+                        onOpen={openModal}
                         onContent={setModalContent}
                     />
                 )}

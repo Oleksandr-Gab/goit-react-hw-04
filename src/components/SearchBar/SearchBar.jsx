@@ -6,7 +6,7 @@ import css from "./SearchBar.module.css";
 
 const notify = () =>
     toast.error("This is required you dummy", {
-        duration: 600,
+        duration: 2000,
     });
 
 export default function SearchBar({ onSearch }) {
